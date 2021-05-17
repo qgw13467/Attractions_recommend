@@ -1,0 +1,142 @@
+create database teamproject;
+
+관광지 테마설정, 경로의 관광지 도착시간 저장, 한 관광지가 여러가지의 테마를 가지는가
+//사용자가 여행지의 테마 지정
+//취소지에서 유사테마가 없을시 2번째 테마를 기준으로 보여줌
+
+create table board(
+boardID int(11) auto_increment,
+routeID int(11),
+userID varchar(30) not null ,
+boardDate DATE,
+maxP int(11),
+currentP int(11),
+appliT DATE,
+boardTitle varchar(100) not null,
+boardContent varchar(2000),
+stateInt int,
+kakaoLink varchar(300),
+primary key(boardid),		//0: 
+FOREIGN KEY (routeID ) REFERENCES route(routeID),
+FOREIGN KEY (userID) REFERENCES user(userID)
+);
+//
+기본, 작성하고 누구나 볼수 있음
+비공개, 작성자만 볼 수 있음
+삭제, 누구도 볼수 없음
+//
+
+
+create table route(
+routeID int auto_increment,
+userID varchar(30) not null ,
+routeDate DATE,
+routeTitle varchar(300),
+routeList varchar(400),
+stateInt int,
+Thema char(20),
+arriveTime varchar(400),
+primary key(routeID),
+FOREIGN KEY (userID) REFERENCES user(userID)
+);
+//
+기본
+삭제
+//
+
+
+
+create table permission(
+boardID int(11),
+userID varchar(30),
+stateInt int,
+primary key(boardID,userID),
+FOREIGN KEY (boardID) REFERENCES board(boardID),
+FOREIGN KEY (userID ) REFERENCES user(userID)
+);
+//
+신청 했지만 답장 안옴,
+신청 후 승인
+신청 후 거절
+//
+
+create table attraction(
+attractionID int(11),
+Thema varchar(20),
+attractionScore float, 
+primary key(attractionID )
+);
+
+
+
+create table user(
+userID varchar(50),
+nickName varchar(50),
+gender int,
+pwd varchar(100),
+UserScore float, 
+primary key(userID)
+);
+//
+0: 남성
+1: 여성
+//
+
+create table evaluation(
+evaluationID int(11) auto_increment,
+takeuserID varchar(30) not null ,
+giveuserID varchar(30) not null ,
+evaluationDate DATE,
+evaluationScore int,
+primary key(evaluationID),
+FOREIGN KEY (takeuserID) REFERENCES user(userID),
+FOREIGN KEY (giveuserID) REFERENCES user(userID)
+);
+
+
+create table review(
+reviewID int(11) auto_increment,
+boardID int(11),
+userID varchar(50),
+reviewDate DATE,
+reviewScore int,
+reviewTitle varchar(100),
+reviewContent varchar(1000),
+primary key(reviewID),
+FOREIGN KEY (boardID ) REFERENCES board(boardID),
+FOREIGN KEY (userID) REFERENCES user(userID)
+);
+
+
+
+
+
+<boardID>
+<routeID>
+<userID>
+<maxP>
+<currentP>
+<matesID>
+<appliT>
+<boardTitle>
+<boardContent>
+
+<routeTitle>
+<routeList>
+
+<attractionID>
+<Thema>
+<attractionScore>
+
+<nickName>
+<gender>
+
+<evaluationID>
+<takeuserID>
+<giveuserID>
+<evaluationScore>
+
+<reviewID>
+<reviewTitle>
+<reviewContent >
+<reviewScore>

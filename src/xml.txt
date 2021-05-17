@@ -1,0 +1,211 @@
+게시물 작성
+url: domain/writeBoard.jsp
+parameter:
+boardID - 게시글의 id
+routeID - 경로글의 id
+userID - 작성자의 id
+maxP - 최대 참가인원
+appliT - 신청 기간 (종료일)
+boardTitle - 게시물 제목
+boardContent - 게시물 내용
+kakaoLink - 카카오링크
+
+성공시
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>true</success>
+</response>
+
+실패시 
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>false</success>
+</response>
+
+===========================================================
+게시물 보기
+url: domain/getBoard.jsp
+parameter:
+boardID - 신청할 동행자 게시글의 id
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+	<boardID><%board.getBoardID();%></boardID>
+	<routeID ><%board.getRouteID();%></routeID>
+	<userID> <%board.getUserID(); %>  </userID>
+	<boardDate><%board.getBoardDate(); %></boardDate>
+	<maxP><%board.getMaxP(); %></maxP>
+	<currentP><%board.getCurrentP(); %></currentP>
+	<appliT><%board.getAppliT(); %></appliT>
+	<boardTitle><%board.getBoardTitle(); %></boardTitle>
+	<boardContent><%board.getBoardContent(); %></boardContent>
+</response>
+
+===========================================================
+게시물 수정			//최대인원이 현재 인원보다 적게 수정시 어떻게?
+url: domain/updateBoard.jsp		//수정하는 사람이 작성자와 같은지 확인은 어디서?
+parameter:
+boardID - 신청할 동행자 게시글의 id
+routeID - 경로글의 id
+userID - 작성자의 id
+maxP - 최대 참가인원
+currentP- 현재 참가인원
+appliT - 신청 기간 (종료일)
+boardTitle - 게시물 제목
+boardContent - 기세물 내용
+kakaoLink - 카카오링크
+
+성공시
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>true</success>
+</response>
+
+실패시 
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>false</success>
+</response>
+
+===========================================================
+게시물 목록 가져오기 (10개 단위로) 		//단위를 클라에서 정할 수 있도록 할지?
+url: domain/viewBoard.jsp
+parameter:
+pageNumber -찾을 페이지 
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+	<boards>
+		<boardID><%list.get(i).getBoardID();%></boardID>
+		<routeID ><%list.get(i).getRouteID(); %></routeID>
+		<userID> <%list.get(i).getUserID(); %>  </userID>
+		<boardDate><%list.get(i).getBoardDate(); %></boardDate>
+		<maxP><%list.get(i).getMaxP(); %></maxP>
+		<currentP><%list.get(i).getCurrentP(); %></currentP>
+		<appliT><%list.get(i).getAppliT(); %></appliT>
+		<boardTitle><%list.get(i).getBoardTitle(); %></boardTitle>
+	</boards>
+	<boards>
+		<boardID><%list.get(i).getBoardID();%></boardID>
+		<routeID ><%list.get(i).getRouteID(); %></routeID>
+		<userID> <%list.get(i).getUserID(); %>  </userID>
+		<boardDate><%list.get(i).getBoardDate(); %></boardDate>
+		<maxP><%list.get(i).getMaxP(); %></maxP>
+		<currentP><%list.get(i).getCurrentP(); %></currentP>
+		<appliT><%list.get(i).getAppliT(); %></appliT>
+		<boardTitle><%list.get(i).getBoardTitle(); %></boardTitle>
+	</boards>
+	.
+	.
+	.
+</response>
+===========================================================
+경로 작성
+url: domain/writeRoute.jsp
+parameter:
+userID - 작성자의 id
+routeTitle - 게시물 제목
+routeList - 관광지 목록을 ','로 연결한 스트링
+Thema - 여행의 테마
+arriveTime - 도착시간을 ','로 연결한 스트링
+
+성공시
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>true</success>
+</response>
+
+실패시 
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>false</success>
+</response>
+===========================================================
+경로 보기
+url: domain/getRoute.jsp
+parameter:
+boardID - 신청할 동행자 게시글의 id
+
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+	<routeID><%route.getRouteID();%></routeID>
+	<userID ><%route.getUserID();	 %></userID>
+	<routeDate > <%route.getRouteDate(); %>  </routeDate >
+	<routeTitle ><%route.getRouteTitle(); %></routeTitle >
+	<routeList ><%route.getRouteList(); %></routeList >
+	<Thema><%route.getThema(); %></Thema >
+	<arriveTime><%route.getArriveTime(); %></arriveTime>
+</response>
+
+===========================================================
+경로 삭제
+url: domain/deleteRoute.jsp
+parameter:
+routeID- 경로의 id
+
+성공시
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>true</success>
+</response>
+
+실패시 
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>false</success>
+</response>
+
+===========================================================
+경로 수정
+url: domain/updateRoute.jsp
+parameter:
+routeID- 경로의 id
+routeTitle - 게시물 제목
+routeList - 관광지 목록을 ','로 연결한 스트링
+Thema - 여행의 테마
+arriveTime - 도착시간을 ','로 연결한 스트링
+
+
+성공시
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>true</success>
+</response>
+
+실패시 
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>false</success>
+</response>
+
+===========================================================
+경로 목록 받아오기 (10개 단위로, 사용자가 작성한 경로 목록들만)
+url: domain/viewRoute.jsp
+parameter:
+pageNumber  - 찾을 페이지 
+userID - 사용자 ID
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+	<routes>
+		<routeID><%list.get(i).getRouteID();%></routeID>
+		<userID><%list.get(i).getUserID(); %></userID>
+		<routeDate> <%list.get(i).getRouteDate(); %>  </routeDate>
+		<routeTitle><%list.get(i).getRouteTitle(); %></routeTitle>
+		<routeList><%list.get(i).getRouteList(); %></routeList>
+		<Thema><%list.get(i).getThema(); %></Thema>
+		<arriveTime><%list.get(i).getArriveTime(); %></arriveTime>
+	</routes>
+	<routes>
+		<routeID><%list.get(i).getRouteID();%></routeID>
+		<userID><%list.get(i).getUserID(); %></userID>
+		<routeDate> <%list.get(i).getRouteDate(); %>  </routeDate>
+		<routeTitle><%list.get(i).getRouteTitle(); %></routeTitle>
+		<routeList><%list.get(i).getRouteList(); %></routeList>
+		<Thema><%list.get(i).getThema(); %></Thema>
+		<arriveTime><%list.get(i).getArriveTime(); %></arriveTime>
+	</routes>
+	.
+	.
+	.
+</response>
