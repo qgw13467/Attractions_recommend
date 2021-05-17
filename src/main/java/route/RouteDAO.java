@@ -14,9 +14,9 @@ public class RouteDAO {
 	
 	public RouteDAO() {
 		try {
-			String dbURL = "jdbc:mysql://localhost:3306/teamproject?serverTimezone=UTC";
-			String dbID = "root";
-			String dbPassword = "1234";
+			String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com";
+			String dbID = "admin";
+			String dbPassword = "123456789";
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		}
