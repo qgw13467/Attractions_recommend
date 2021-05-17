@@ -7,14 +7,15 @@ import java.util.ArrayList;
 
 
 
-
+//2021 박희종
 public class BoardDAO {
+	
 	private Connection conn;
 	private ResultSet rs;
 	
 	public BoardDAO() {
 		try {
-			String dbURL = "jdbc:mysql://localhost:3306/project?serverTimezone=UTC";
+			String dbURL = "jdbc:mysql://localhost:3306/teamproject?serverTimezone=UTC";
 			String dbID = "root";
 			String dbPassword = "1234";
 			Class.forName("com.mysql.jdbc.Driver");
@@ -26,6 +27,10 @@ public class BoardDAO {
 		}
 	}
 	
+	
+	
+	
+	//날짜 구하는 함수
 	public String getDate() {
 		String SQL = "SELECT NOW()";
 		try {
@@ -43,6 +48,11 @@ public class BoardDAO {
 		return ""; 
 	}
 	
+	
+	
+	
+	
+	//다음 게시물 번호받아오기
 	public int getNextBoard() {
 		String SQL = "SELECT boardID FROM board ORDER BY boardID DESC";
 		try {
@@ -62,25 +72,27 @@ public class BoardDAO {
 	}
 	
 	
-	public int writeBoard(String boardID, String routeID  , String userID, int maxP ,int currentP ,String matesID,
-			int appliT,String boardTitle ,String boardContent   ) {
-		String SQL = "INSERT INTO board(boardID ,routeID ,userID ,boardDate , maxP, currentP,"
-				+ "matesID ,appliT, boardTitle  ,boardContent  ) VALUES (?, ?, ?, ?, ?,    ?, ?, ?, ?, ? )";
+	
+	
+	//게시물 쓰기
+	public int writeBoard(int routeID  , String userID, int maxP ,
+			String appliT,String boardTitle ,String boardContent ,String kakaoLink  ) {
+		String SQL = "INSERT INTO board(routeID ,userID ,boardDate , maxP, currentP,"
+				+ " appliT, boardTitle  ,boardContent, stateInt, kakaoLink   ) VALUES (?, ?, ?, ?, ?,    ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			
-			pstmt.setInt(1,  getNextBoard());
-			pstmt.setString(2,  routeID);
-			pstmt.setString(3,  userID);
-			pstmt.setString(4,  getDate());
-			pstmt.setInt(5,  maxP);
-			pstmt.setInt(6,  currentP);
-			pstmt.setString(7,  matesID);
-			pstmt.setInt(8,  appliT);
-			pstmt.setString(9,  boardTitle);
-			pstmt.setString(10,  boardContent);
-			
-			
+	
+			pstmt.setInt(1,  routeID);
+			pstmt.setString(2,  userID);
+			pstmt.setString(3,  getDate());
+			pstmt.setInt(4,  maxP);
+			pstmt.setInt(5,  0);
+			pstmt.setString(6,  appliT);
+			pstmt.setString(7,  boardTitle);
+			pstmt.setString(8,  boardContent);
+			pstmt.setInt(9,  0);
+			pstmt.setString(10,  kakaoLink);
 			return pstmt.executeUpdate();
 			
 		} catch(Exception e) {
@@ -89,6 +101,10 @@ public class BoardDAO {
 		return -1; 
 	}
 	
+	
+	
+	
+	//게시물 받아오기
 	public Board getBoard(int boardID) {
 		
 		String SQL = "SELECT * FROM board WHERE boardID = ?";
@@ -106,10 +122,11 @@ public class BoardDAO {
 				board.setBoardDate(rs.getString(4));
 				board.setMaxP(rs.getInt(5));
 				board.setCurrentP(rs.getInt(6));
-				board.setMatesID(rs.getString(7));
-				board.setAppliT(rs.getInt(8));
-				board.setBoardContent(rs.getString(9));
-				board.setBoardTitle(rs.getString(10));
+				board.setAppliT(rs.getString(7));
+				board.setBoardContent(rs.getString(8));
+				board.setBoardTitle(rs.getString(9));
+				board.setStateInt(rs.getInt(10));
+				board.setKakaoLink(rs.getString(11));
 				return board;
 			}
 		} catch(Exception e) {
@@ -120,9 +137,16 @@ public class BoardDAO {
 		
 	}
 	
+	
+	
+	
+	
+	
+	
+	//페이징
 	public ArrayList<Board> getList(int pageNumber)
 	{
-		String SQL = "SELECT * FROM board WHERE boardID < ?  ORDER BY boardID DESC LIMIT 10";
+		String SQL = "SELECT * FROM board WHERE boardID < ? AND stateInt <>1 ORDER BY boardID DESC LIMIT 10";
 		
 		ArrayList<Board> list = new ArrayList<Board>();
 		
@@ -140,11 +164,13 @@ public class BoardDAO {
 				board.setBoardDate(rs.getString(4));
 				board.setMaxP(rs.getInt(5));
 				board.setCurrentP(rs.getInt(6));
-				board.setMatesID(rs.getString(7));
-				board.setAppliT(rs.getInt(8));
-				board.setBoardContent(rs.getString(9));
-				board.setBoardTitle(rs.getString(10));
+				board.setAppliT(rs.getString(7));
+				board.setBoardContent(rs.getString(8));
+				board.setBoardTitle(rs.getString(9));
+				board.setStateInt(rs.getInt(10));
+				board.setKakaoLink(rs.getString(11));
 				list.add(board);
+
 			}
 						
 		} catch(Exception e) {
@@ -153,9 +179,15 @@ public class BoardDAO {
 		return list;
 	}
 	
-	public boolean nextPage(int pageNumber)
+	
+	
+	
+	
+	
+	//다음 페이지 받기
+	public boolean nextPageBoard(int pageNumber)
 	{
-		String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable <>0";
+		String SQL = "SELECT * FROM board WHERE boardID  < ? AND stateInt  <>0";
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
@@ -171,14 +203,20 @@ public class BoardDAO {
 		return false; 
 	}
 	
-	public int update(int boardID , String boardTitle , String boardContent ) {
-		String SQL = "UPDATE board SET boardTitle = ?, boardContent = ? WHERE bbsID = ?";
+	
+	
+	//게시물 수정 (현재 신청인원보다 최대인원을 줄일 수 없도록 할것)
+	public int updateBoard(int boardID ,int routeID, int maxP, String appliT, String boardTitle , String boardContent, String kakaoLink ) {
+		String SQL = "UPDATE board SET routeID =?, maxP =?, appliT=?, boardTitle = ?, boardContent = ?, kakaoLink=? WHERE boardID = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			
-			pstmt.setString(1,  boardTitle);
-			pstmt.setString(2,  boardContent);
-			pstmt.setInt(3,  boardID);
+			pstmt.setInt(1,  routeID);
+			pstmt.setInt(2,  maxP);
+			pstmt.setString(3,  appliT);
+			pstmt.setString(4,  boardTitle);
+			pstmt.setString(5,  boardContent);
+			pstmt.setString(6,  kakaoLink);
+			pstmt.setInt(7,  boardID);
 			return pstmt.executeUpdate();
 			
 		} catch(Exception e) {
@@ -187,18 +225,23 @@ public class BoardDAO {
 		return -1; 
 	}
 	
-	/* 삭제가 안보이게 인지 완전 삭제인지에 따라 테이블 형테 바꿈
-	public int delete(int bbsID) {
-		String SQL = "UPDATE BBS SET bbsAvailable = 0 WHERE bbsID = ?";
+	
+	
+	
+	
+	
+	// 삭제가 안보이게 인지 완전 삭제인지에 따라 테이블 형테 바꿈
+	public int delete(int boardID ) {
+		String SQL = "UPDATE board SET stateInt  = 1 WHERE boardID  = ?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1,  bbsID);
+			pstmt.setInt(1,  boardID );
 			return pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return -1; 
 	}
-	*/
+	
 	
 }

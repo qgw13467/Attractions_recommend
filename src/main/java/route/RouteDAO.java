@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import board.Board;
-
 
 
 public class RouteDAO {
@@ -16,7 +14,7 @@ public class RouteDAO {
 	
 	public RouteDAO() {
 		try {
-			String dbURL = "jdbc:mysql://localhost:3306/project?serverTimezone=UTC";
+			String dbURL = "jdbc:mysql://localhost:3306/teamproject?serverTimezone=UTC";
 			String dbID = "root";
 			String dbPassword = "1234";
 			Class.forName("com.mysql.jdbc.Driver");
@@ -46,7 +44,7 @@ public class RouteDAO {
 	}
 	
 	public int getNextRoute() {
-		String SQL = "SELECT boardID FROM route ORDER BY routeID DESC";
+		String SQL = "SELECT routeID FROM route ORDER BY routeID DESC";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			
@@ -64,17 +62,20 @@ public class RouteDAO {
 	}
 	
 	
-	public int writeRoute(String userID, String routeTitle ,String  routeList  ) {
-		String SQL = "INSERT INTO route(routeID ,userID ,routeDate, routeTitle  ,routeList ) VALUES (?, ?, ?, ?,?)";
+	public int writeRoute(String userID, String routeTitle ,String  routeList ,String Thema,String arriveTime ) {
+		String SQL = "INSERT INTO route(userID ,routeDate, routeTitle  ,routeList, stateInt ,Thema, arriveTime) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			
-			pstmt.setInt(1,  getNextRoute());
-			pstmt.setString(2,  userID);
-			pstmt.setString(3,  getDate());
-			pstmt.setString(4,  routeTitle);
-			pstmt.setString(5,  routeList);
-				
+
+			pstmt.setString(1,  userID);
+			pstmt.setString(2,  getDate());
+			pstmt.setString(3,  routeTitle);
+			pstmt.setString(4,  routeList);
+			pstmt.setInt(5,  0);
+			pstmt.setString(6, Thema);
+			pstmt.setString(7, arriveTime);
 			return pstmt.executeUpdate();
 			
 		} catch(Exception e) {
@@ -85,23 +86,27 @@ public class RouteDAO {
 	
 	
 	
-	public Route getRoute(int boardID) {
+	public Route getRoute(int routeID) {
 		
-		String SQL = "SELECT * FROM board WHERE boardID = ?";
+		String SQL = "SELECT * FROM route WHERE routeID = ?";
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1,  boardID);
+			pstmt.setInt(1,  routeID);
 			rs= pstmt.executeQuery();
 			if(rs.next())
 			{
+				
 				Route route = new Route();
 				route.setRouteID(rs.getInt(1));
 				route.setUserID(rs.getString(2));
 				route.setRouteDate(rs.getString(3));
 				route.setRouteTitle(rs.getString(4));
 				route.setRouteList(rs.getString(5));
-				
+				route.setStateInt(rs.getInt(6));
+				route.setThema(rs.getString(7));
+				route.setArriveTime(rs.getString(8));
+
 				return route;
 			}
 		} catch(Exception e) {
@@ -112,15 +117,16 @@ public class RouteDAO {
 	
 	
 	
-	public ArrayList<Route> getList(int pageNumber)
+	public ArrayList<Route> getList(int pageNumber, String userID)
 	{
-		String SQL = "SELECT * FROM route WHERE routeID  < ?  ORDER BY routeID  DESC LIMIT 10";
+		String SQL = "SELECT * FROM route WHERE routeID  < ? AND userID = ?  ORDER BY routeID  DESC LIMIT 10";
 		
 		ArrayList<Route> list = new ArrayList<Route>();
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1,  getNextRoute() - (pageNumber - 1) * 10);
+			pstmt.setString(2, userID);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -132,14 +138,52 @@ public class RouteDAO {
 				route.setRouteDate(rs.getString(3));
 				route.setRouteTitle(rs.getString(4));
 				route.setRouteList(rs.getString(5));
+				route.setStateInt(rs.getInt(6));
+				route.setThema(rs.getString(7));
+				route.setArriveTime(rs.getString(8));
 				list.add(route);
-				
 			}
 						
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
 		return list;
+	}
+	
+	
+	
+	//경로 수정
+	public int updateRoute(int routeID, String boardTitle , String routeList, String Thema, String arriveTime ) {
+		String SQL = "UPDATE route SET routeTitle  = ?, routeList  = ?, Thema=?, arriveTime=? WHERE routeID = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+
+			pstmt.setString(1,  boardTitle);
+			pstmt.setString(2,  routeList);
+			pstmt.setString(3,  Thema);
+			pstmt.setString(4,  arriveTime);
+			pstmt.setInt(5,  routeID);
+			return pstmt.executeUpdate();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1; 
+	}
+
+	
+	
+	public int delete(int routeID  ) {
+		String SQL = "UPDATE route SET stateInt  = 1 WHERE routeID   = ?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1,  routeID  );
+			return pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1; 
 	}
 	
 	

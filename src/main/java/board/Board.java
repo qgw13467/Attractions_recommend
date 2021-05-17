@@ -7,10 +7,12 @@ public class Board {
 	private String boardDate;
 	private int maxP;
 	private int currentP;
-	private String matesID;
-	private int appliT;
+	private String appliT;
 	private String boardTitle;
 	private String boardContent;
+	private int stateInt;
+	private String kakaoLink;
+	
 	
 	public int getBoardID() {
 		return boardID;
@@ -48,16 +50,10 @@ public class Board {
 	public void setCurrentP(int currentP) {
 		this.currentP = currentP;
 	}
-	public String getMatesID() {
-		return matesID;
-	}
-	public void setMatesID(String matesID) {
-		this.matesID = matesID;
-	}
-	public int getAppliT() {
+	public String getAppliT() {
 		return appliT;
 	}
-	public void setAppliT(int appliT) {
+	public void setAppliT(String appliT) {
 		this.appliT = appliT;
 	}
 	public String getBoardContent() {
@@ -71,6 +67,18 @@ public class Board {
 	}
 	public void setBoardTitle(String boardTitle) {
 		this.boardTitle = boardTitle;
+	}
+	public int getStateInt() {
+		return stateInt;
+	}
+	public void setStateInt(int stateInt) {
+		this.stateInt = stateInt;
+	}
+	public String getKakaoLink() {
+		return kakaoLink;
+	}
+	public void setKakaoLink(String kakaoLink) {
+		this.kakaoLink = kakaoLink;
 	}
 
 	
