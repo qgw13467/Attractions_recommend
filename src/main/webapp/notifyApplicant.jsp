@@ -14,8 +14,8 @@ PreparedStatement pstmt = null;
 ResultSet rs = null;
 try {
 	String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com";
-	String dbID = "root";
-	String dbPassword = "1234";
+	String dbID = "admin";
+	String dbPassword = "123456789";
 	Class.forName("com.mysql.jdbc.Driver");
 
 	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
