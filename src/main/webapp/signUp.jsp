@@ -28,7 +28,7 @@ if( userID == null || userID.toUpperCase().equals("NULL") ||nickName == null || 
 	msg = "아이디, 비밀번호, 닉네임은 반드시 필요합니다.";
 }
 else try {
- 	String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com/teamproject";
+ 	String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com";
 	String dbID = "admin";
 	String dbPassword = "123456789";
 	Class.forName("com.mysql.jdbc.Driver");
