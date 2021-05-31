@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
-
 <%
 String userID = request.getParameter("userID");
 String pwd = request.getParameter("pwd");
@@ -21,10 +18,11 @@ if( userID == null || userID.toUpperCase().equals("NULL") || pwd == null || pwd.
 	msg = "아이디, 비밀번호를 입력해주세요.";
 }
 else try {
- 	String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com";
+	String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com/teamproject";
 	String dbID = "admin";
 	String dbPassword = "123456789";
 	Class.forName("com.mysql.jdbc.Driver");
+	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 	
 	String sql = "SELECT nickName, gender FROM user WHERE userID = ? AND pwd = ?";
 
@@ -64,10 +62,4 @@ catch (Exception e) {
 	if(conn != null) try{ conn.close();} catch(Exception e){}
 }
 %>
-
-<response>
-<success><%=success %></success>
-<msg><%=msg%></msg> 
-<nickName><%=nickName %></nickName>
-<gender><%=gender %></gender>
-</response>
+{"success":<%=success %>,"msg":"<%=msg%>","nickName":"<%=nickName %>","gender":"<%=gender %>"}

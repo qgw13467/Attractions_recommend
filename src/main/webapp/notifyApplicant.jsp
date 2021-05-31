@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
-<response>
 
 <%
 int number=0;
@@ -13,11 +10,10 @@ Connection conn = null;
 PreparedStatement pstmt = null;
 ResultSet rs = null;
 try {
-	String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com";
+	String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com/teamproject";
 	String dbID = "admin";
 	String dbPassword = "123456789";
 	Class.forName("com.mysql.jdbc.Driver");
-
 	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 	
 	String sql = "SELECT permission.boardID, board.boardTitle, permission.userID, user.nickName "
@@ -34,23 +30,18 @@ try {
 	rs.beforeFirst();
 	
 %>
-
-<number><%=number %> </number>
-<items>
+{"number":<%=number %>, "items":[
 <%
 	while(rs.next()){
+		if(rs.getRow() != 0){
+			out.print(",");
+		}
 %>	
-<item>
-<boardID><%=rs.getString(1) %></boardID>
-<boardTitle><%=rs.getString(2) %></boardTitle>
-<userID><%=rs.getString(3) %></userID>
-<nickName><%=rs.getString(4) %></nickName>
-</item>
+{"boardID":<%=rs.getString(1) %>, "boardTitle":"<%=rs.getString(2) %>", "userID":"<%=rs.getString(3) %>", "nickName":"<%=rs.getString(4) %>" }
 <%	
 	}
 %>
-</items>
-
+]}
 <%
 }catch (Exception e) {
 	e.printStackTrace();
@@ -60,4 +51,3 @@ try {
 	if(conn != null) try{ conn.close();} catch(Exception e){}
 }
 %>
-</response>

@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
-
 <%
 String userID = request.getParameter("userID");
 String nickName = request.getParameter("nickName");
@@ -28,11 +25,10 @@ if( userID == null || userID.toUpperCase().equals("NULL") ||nickName == null || 
 	msg = "아이디, 비밀번호, 닉네임은 반드시 필요합니다.";
 }
 else try {
- 	String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com";
+	String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com/teamproject";
 	String dbID = "admin";
 	String dbPassword = "123456789";
 	Class.forName("com.mysql.jdbc.Driver");
-
 	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 	
 	String sql = "SELECT userID FROM user WHERE userID = ?";
@@ -75,7 +71,4 @@ catch (Exception e) {
 }
 %>
 
-<response>
-<success><%=success %></success>
-<msg><%=msg%></msg> 
-</response>
+{"success":<%=success %>,"msg":"<%=msg%>"}

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="application/json; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*"%>
 <%
 String boardID = request.getParameter("boardID");
@@ -14,11 +12,10 @@ String msg ="";
 String success ="";
 String kakaoLink = "none";
 try {
-	String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com";
+	String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com/teamproject";
 	String dbID = "admin";
 	String dbPassword = "123456789";
 	Class.forName("com.mysql.jdbc.Driver");
-
 	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 	
 	String sql = "INSERT INTO permission VALUES(?,?,0)";
@@ -70,8 +67,4 @@ catch (Exception e) {
 }
 
 %>
-<response>
-<success><%=success %></success>
-<msg><%=msg%></msg> 
-<kakaoLink><%=kakaoLink %></kakaoLink>
-</response>
+{"success":<%=success %>,"msg":"<%=msg%>","kakaoLink":"<%=kakaoLink %>"}
