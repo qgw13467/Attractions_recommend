@@ -40,8 +40,19 @@ private static String tourDetailURL(String contentId){
 %>
 <%
 Connection conn = null;
-Statement stmt = null;
+PreparedStatement stmt = null;
 ArrayList<Attraction_> arrAttraction = new ArrayList<>();
+
+String sIndex = request.getParameter("index");
+int index = 0;
+if(sIndex == null)
+{
+	index =0;
+}
+else
+{
+	index = Integer.parseInt(sIndex) * 10;
+}
 
 String msg ="";
 
@@ -82,15 +93,20 @@ while(true){
 			}
 		
 			arrAttraction.add(attraction);
+			
 		}
 	}
 	
 	pageNo++;
 }
 
-for(int i=0; i< arrAttraction.size(); i++)
+for(int i=0; i< 10; i++)
 {
-	String url = tourDetailURL(arrAttraction.get(i).getID());
+	if(i >= arrAttraction.size())
+	{
+		break;
+	}
+	String url = tourDetailURL(arrAttraction.get(i + index).getID());
 	DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();	
 	DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
 	Document doc = dBuilder.parse(url);
@@ -101,7 +117,7 @@ for(int i=0; i< arrAttraction.size(); i++)
 	Node nNode = nList.item(0);
 	if(nNode.getNodeType() == Node.ELEMENT_NODE){
 		Element eElement = (Element) nNode;
-		arrAttraction.get(i).setOverview( getTagValue("overview", eElement));
+		arrAttraction.get(i+ index).setOverview( getTagValue("overview", eElement));
 	}
 }
 
@@ -112,20 +128,38 @@ try {
 	Class.forName("com.mysql.jdbc.Driver");
 	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 	
-	String sql = "REPLACE INTO attraction" + Attraction_.getSQLColumns() + "VALUES " ;
-	for(int i=0; i< arrAttraction.size() - 1; i++)
+	for(int i=0; i< 10; i++)
 	{
-		sql = sql.concat(arrAttraction.get(i).getSQLValue()).concat(",");
-	}
-	sql = sql.concat(arrAttraction.get(arrAttraction.size() - 1).getSQLValue()).concat(";");
-	msg = sql;
+		if(i >= arrAttraction.size())
+		{
+			break;
+		}
+		
+		String sql = "REPLACE INTO attraction"
+				+"(attractionID,title,addr,mapx,mapy,firstImage,firstImage2,overview,thema1,thema2,thema3,thema4,thema5,thema6,thema7,attractionScore)"
+				+"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0)" ;
+		msg = Integer.toString(i+index);
 	
-	stmt = conn.createStatement();
-	stmt.execute(sql);
+		stmt = conn.prepareStatement(sql);
+		stmt.setString(1,arrAttraction.get(i+index).getID());
+		stmt.setString(2,arrAttraction.get(i+index).getTitle());
+		stmt.setString(3,arrAttraction.get(i+index).getAddr());
+		stmt.setString(4,arrAttraction.get(i+index).getX());
+		stmt.setString(5,arrAttraction.get(i+index).getY());
+		stmt.setString(6,arrAttraction.get(i+index).getFirstImg());
+		stmt.setString(7,arrAttraction.get(i+index).getFirstImg2());
+		stmt.setString(8,arrAttraction.get(i+index).getOverview());
+		for(int j=0; j< 7; j++){
+			stmt.setFloat(9+j,arrAttraction.get(i+index).getThema(j));
+		}
+		
+		stmt.executeUpdate();
+		
+	}
 	
 	msg = "성공";
 }catch (SQLException e){
-	msg = "error code:" + e.getErrorCode();
+// 	msg = "error code:" + e.getErrorCode();
 	e.printStackTrace();
 }finally{
 	if(stmt != null) try{ stmt.close();} catch(Exception e){}

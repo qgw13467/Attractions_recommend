@@ -22,9 +22,17 @@ public class Attraction_ {
 	public void setThema(String cat) {
 		this.themas = classifyThema(cat);
 	}
+	
+	public float getThema(int i) {
+		return themas[i];
+	}
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public String getTitle() {
+		return title;
 	}
 
 	public void setAddr(String addr) {
@@ -33,11 +41,15 @@ public class Attraction_ {
 			this.addr = "";
 		}
 	}
+	
+	public String getAddr() {
+		return addr;
+	}
 
 	public void setX(String x) {
 		this.x = x;
 	}
-
+	
 	public String getX() {
 		return x;
 	}
@@ -46,11 +58,19 @@ public class Attraction_ {
 		this.y = y;
 	}
 
+	public String getY() {
+		return y;
+	}
+	
 	public void setFirstImg(String img) {
 		this.firstimg = img;
 		if (img == null) {
 			this.firstimg = "";
 		}
+	}
+	
+	public String getFirstImg() {
+		return firstimg;
 	}
 
 	public void setFirstImg2(String img) {
@@ -59,12 +79,20 @@ public class Attraction_ {
 			this.firstimg2 = "";
 		}
 	}
+	
+	public String getFirstImg2() {
+		return firstimg2;
+	}
 
 	public void setOverview(String overview) {
 		this.overview = overview;
 		if (overview == null) {
 			this.overview = "";
 		}
+	}
+	
+	public String getOverview() {
+		return overview;
 	}
 
 	// 자연 0, 역사 1, 휴향 2, 문화시설 3, 체험 4, 레저 5, 쇼핑 6
@@ -100,27 +128,5 @@ public class Attraction_ {
 		String[] temp;
 		temp = addr1.split(" ");
 		return temp[0] + " " + temp[1];
-	}
-
-	public String getSQLValue() {
-		String value = "(";
-		value += "\"" + id + "\",";
-		value += "\"" + title + "\",";
-		value += "\"" + addr + "\",";
-		value += x + ",";
-		value += y + ",";
-		value += "\"" + firstimg + "\",";
-		value += "\"" + firstimg2 + "\",";
-		value += "\"" + overview + "\",";
-		for (int i = 0; i < 7; i++) {
-			value += Float.toString(themas[i]) + ",";
-		}
-		value += "0.0" + ")";
-
-		return value;
-	}
-
-	public static String getSQLColumns() {
-		return "(attractionID,title,addr,mapx,mapy,firstImage,firstImage2,overview,thema1,thema2,thema3,thema4,thema5,thema6,thema7,attractionScore)";
 	}
 }
