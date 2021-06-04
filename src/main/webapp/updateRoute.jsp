@@ -1,6 +1,6 @@
 
 
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
+<%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="route.Route" %>
 <%@ page import="route.RouteDAO" %>
@@ -19,20 +19,18 @@
 	int result=routeDAO.updateRoute(routeID, routeTitle, routeList, Thema, arriveTime);
 %>
 
-<?xml version="1.0" encoding="UTF-8"?>
-<response>
+
 <%
 	if(result==-1){
 		%>
-		<success>false</success>
+		{"success":"false"}
 		<%
 	}
 	else{
 		%>
-		<success>true</success>
+		{"success":"true"}
 		<%
 	}
 %>
-</response>
 
 
