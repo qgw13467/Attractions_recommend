@@ -32,11 +32,8 @@
 				"currentP":"<%=list.get(i).getCurrentP() %>",
 				"appliT":"<%=list.get(i).getAppliT() %>",
 				"boardTitle":"<%=list.get(i).getBoardTitle() %>"
-				}
-			<%		if(i!=list.size()-1){%>
-					,<%
+				}<%	if(i!=list.size()-1){%>,<%
 					}
-				}
-			%>
+				}%>
 		]
 }
