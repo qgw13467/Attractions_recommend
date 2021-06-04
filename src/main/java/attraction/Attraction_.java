@@ -10,13 +10,13 @@ public class Attraction_{
 	private String firstimg = "";
 	private String firstimg2 = "";
 	private String overview = "";
-	private float themas1;
-	private float themas2;
-	private float themas3;
-	private float themas4;
-	private float themas5;
-	private float themas6;
-	private float themas7;
+	private float thema1;
+	private float thema2;
+	private float thema3;
+	private float thema4;
+	private float thema5;
+	private float thema6;
+	private float thema7;
 	private float[] themas = new float[7];
 
 	public void setID(String id) {
@@ -107,49 +107,48 @@ public class Attraction_{
 	public String getOverview() {
 		return overview;
 	}
-	public float getThemas1() {
-		return themas1;
+	public float getThema1() {
+		return thema1;
 	}
-	public void setThemas1(float themas1) {
-		this.themas1 = themas1;
+	public void setThema1(float thema1) {
+		this.thema1 = thema1;
 	}
-	public float getThemas2() {
-		return themas2;
+	public float getThema2() {
+		return thema2;
 	}
-	public void setThemas2(float themas2) {
-		this.themas2 = themas2;
+	public void setThema2(float thema2) {
+		this.thema2 = thema2;
 	}
-	public float getThemas3() {
-		return themas3;
+	public float getThema3() {
+		return thema3;
 	}
-	public void setThemas3(float themas3) {
-		this.themas3 = themas3;
+	public void setThema3(float thema3) {
+		this.thema3 = thema3;
 	}
-	public float getThemas4() {
-		return themas4;
+	public float getThema4() {
+		return thema4;
 	}
-	public void setThemas4(float themas4) {
-		this.themas4 = themas4;
+	public void setThema4(float thema4) {
+		this.thema4 = thema4;
 	}
-	public float getThemas5() {
-		return themas5;
+	public float getThema5() {
+		return thema5;
 	}
-	public void setThemas5(float themas5) {
-		this.themas5 = themas5;
+	public void setThema5(float thema5) {
+		this.thema5 = thema5;
 	}
-	public float getThemas6() {
-		return themas6;
+	public float getThema6() {
+		return thema6;
 	}
-	public void setThemas6(float themas6) {
-		this.themas6 = themas6;
+	public void setThema6(float thema6) {
+		this.thema6 = thema6;
 	}
-	public float getThemas7() {
-		return themas7;
+	public float getThema7() {
+		return thema7;
 	}
-	public void setThemas7(float themas7) {
-		this.themas7 = themas7;
+	public void setThema7(float thema7) {
+		this.thema7 = thema7;
 	}
-
 	
 	
 	// 자연 0, 역사 1, 휴향 2, 문화시설 3, 체험 4, 레저 5, 쇼핑 6
@@ -186,6 +185,7 @@ public class Attraction_{
 		temp = addr1.split(" ");
 		return temp[0] + " " + temp[1];
 	}
+
 	
 
 
