@@ -1,6 +1,6 @@
 
 
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
+<%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="board.Board" %>
 <%@ page import="board.BoardDAO" %>
@@ -14,24 +14,29 @@
 	ArrayList<Board> list= boardDAO.getList(pageNumber);
 %>
 
-<?xml version="1.0" encoding="UTF-8"?>
 
-<response>
-<%
-for(int i=0;i<list.size();i++){
-	%>
-	<boards>
-		<boardID><%=list.get(i).getBoardID()%></boardID>
-		<routeID ><%=list.get(i).getRouteID() %></routeID>
-		<userID> <%=list.get(i).getUserID() %>  </userID>
-		<boardDate><%=list.get(i).getBoardDate() %></boardDate>
-		<maxP><%=list.get(i).getMaxP() %></maxP>
-		<currentP><%=list.get(i).getCurrentP() %></currentP>
-		<appliT><%=list.get(i).getAppliT() %></appliT>
-		<boardTitle><%=list.get(i).getBoardTitle() %></boardTitle>
-	</boards>
-	
-	<%
+
+
+{
+	"boards":
+		[
+			<%
+				for(int i=0;i<list.size();i++){
+			%>
+				{
+				"boardID":"<%=list.get(i).getBoardID()%>",
+				"routeID":"<%=list.get(i).getRouteID() %>",
+				"userID":"<%=list.get(i).getUserID()%>",
+				"boardDate":"<%=list.get(i).getBoardDate()%>",
+				"maxP":"<%=list.get(i).getMaxP() %>",
+				"currentP":"<%=list.get(i).getCurrentP() %>",
+				"appliT":"<%=list.get(i).getAppliT() %>",
+				"boardTitle":"<%=list.get(i).getBoardTitle() %>"
+				}
+			<%		if(i!=list.size()-1){%>
+					,<%
+					}
+				}
+			%>
+		]
 }
-%>
-</response>
