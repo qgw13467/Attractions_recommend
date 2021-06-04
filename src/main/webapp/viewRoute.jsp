@@ -15,26 +15,6 @@
 	ArrayList<Route> list= routeDAO.getList(pageNumber, userID);
 %>
 
-
-
-<response>
-<%
-for(int i=0;i<list.size();i++){
-	%>
-	<routes>
-		<routeID><%=list.get(i).getRouteID()%></routeID>
-		<userID><%=list.get(i).getUserID()%></userID>
-		<routeDate> <%=list.get(i).getRouteDate() %>  </routeDate>
-		<routeTitle><%=list.get(i).getRouteTitle() %></routeTitle>
-		<routeList><%=list.get(i).getRouteList() %></routeList>
-		<Thema><%=list.get(i).getThema() %></Thema>
-		<arriveTime><%=list.get(i).getArriveTime() %></arriveTime>
-	</routes>
-	<%
-}
-%>
-</response>
-
 {
 	"routes":
 		[
