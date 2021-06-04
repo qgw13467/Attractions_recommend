@@ -1,6 +1,6 @@
 
 
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
+<%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="attraction.Attraction" %>
 <%@ page import="attraction.AttractionDAO" %>
@@ -16,12 +16,12 @@
 %>
 
 
-<response>
-	<attractionName ><%=attraction.getAttractionName()%></attractionName>
-	<attractionID ><%=attraction.getAttractionID()%></attractionID>
-	<addr1> <%=attraction.getAddr1()%>  </addr1>
-	<Thema><%=attraction.getThema()%></Thema>
-	<mapX><%=attraction.getMapX()%></mapX>
-	<mapY><%=attraction.getMapY()%></mapY>
-	<attractionScore><%=attraction.getAttractionScore()%></attractionScore>
-</response>
+	{
+	"attractionName":"<%=attraction.getAttractionName()%>",
+	"attractionID":"<%=attraction.getAttractionID()%>",
+	"addr1":"<%=attraction.getAddr1()%>",
+	"Thema":"<%=attraction.getThema()%>",
+	"mapX":"<%=attraction.getMapX()%>",
+	"mapY":"<%=attraction.getMapY()%>",
+	"attractionScore":"<%=attraction.getAttractionScore()%>"
+	}
