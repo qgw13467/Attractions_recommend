@@ -1,6 +1,6 @@
 
 
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
+<%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="board.Board" %>
 <%@ page import="board.BoardDAO" %>
@@ -22,22 +22,19 @@
 	int result=boardDAO.updateBoard(boardID, routeID, maxP, appliT, boardTitle, boardContent, kakaoLink);
 %>
 
-<?xml version="1.0" encoding="UTF-8"?>
 
-<response>
 
 <%
 	if(result==-1){
 		%>
-		<success>false</success>
+		{"success":"false"}
 		<%
 	}
 	else{
 		%>
-		<success>true</success>
+		{"success":"true"}
 		<%
 	}
 %>
-</response>
 
 
