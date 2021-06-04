@@ -1,9 +1,9 @@
-
-
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
+<%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="board.Board" %>
 <%@ page import="board.BoardDAO" %>
+<%@ page import="org.json.simple.JSONObject"%>
+<%@ page import="org.json.simple.JSONArray"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <%
@@ -14,21 +14,21 @@
 	int result=boardDAO.delete(boardID);
 %>
 
+<%
+   response.setContentType("application/json");
+   response.setHeader("Content-Disposition", "inline");
+%>
 
 
-<?xml version="1.0" encoding="UTF-8"?>
-<response>
 <%
 	if(result==-1){
 		%>
-		<success>false</success>
+		{"success":"false"}
 		<%
 	}
 	else{
 		%>
-		<success>true</success>
+		{"success":"true"}
 		<%
 	}
 %>
-</response>
-
