@@ -49,13 +49,13 @@ public class AttractionDAO {
 					attraction.setFirstImg(rs.getString(7));
 					attraction.setFirstImg2(rs.getString(8));
 					attraction.setOverview(rs.getString(9));
-					attraction.setThemas1(rs.getFloat(10));
-					attraction.setThemas2(rs.getFloat(11));
-					attraction.setThemas3(rs.getFloat(12));
-					attraction.setThemas4(rs.getFloat(13));
-					attraction.setThemas5(rs.getFloat(14));
-					attraction.setThemas6(rs.getFloat(15));
-					attraction.setThemas7(rs.getFloat(16));
+					attraction.setThema1(rs.getFloat(10));
+					attraction.setThema2(rs.getFloat(11));
+					attraction.setThema3(rs.getFloat(12));
+					attraction.setThema4(rs.getFloat(13));
+					attraction.setThema5(rs.getFloat(14));
+					attraction.setThema6(rs.getFloat(15));
+					attraction.setThema7(rs.getFloat(16));
 					list.add(attraction);
 
 				}
@@ -88,13 +88,13 @@ public class AttractionDAO {
 					attraction.setFirstImg(rs.getString(7));
 					attraction.setFirstImg2(rs.getString(8));
 					attraction.setOverview(rs.getString(9));
-					attraction.setThemas1(rs.getFloat(10));
-					attraction.setThemas2(rs.getFloat(11));
-					attraction.setThemas3(rs.getFloat(12));
-					attraction.setThemas4(rs.getFloat(13));
-					attraction.setThemas5(rs.getFloat(14));
-					attraction.setThemas6(rs.getFloat(15));
-					attraction.setThemas7(rs.getFloat(16));
+					attraction.setThema1(rs.getFloat(10));
+					attraction.setThema2(rs.getFloat(11));
+					attraction.setThema3(rs.getFloat(12));
+					attraction.setThema4(rs.getFloat(13));
+					attraction.setThema5(rs.getFloat(14));
+					attraction.setThema6(rs.getFloat(15));
+					attraction.setThema7(rs.getFloat(16));
 					return attraction;
 				}
 			} catch(Exception e) {
@@ -105,4 +105,6 @@ public class AttractionDAO {
 			
 		}
 		
+		
+
 }
