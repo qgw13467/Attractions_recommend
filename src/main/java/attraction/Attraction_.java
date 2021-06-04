@@ -1,8 +1,8 @@
 package attraction;
 
-public class Attraction_ {
+public class Attraction_{
 	private String id;
-	private float[] themas = new float[7];
+	private float score;
 	private String title;
 	private String addr = "";
 	private String x;
@@ -10,15 +10,28 @@ public class Attraction_ {
 	private String firstimg = "";
 	private String firstimg2 = "";
 	private String overview = "";
+	private float themas1;
+	private float themas2;
+	private float themas3;
+	private float themas4;
+	private float themas5;
+	private float themas6;
+	private float themas7;
+	private float[] themas = new float[7];
 
 	public void setID(String id) {
 		this.id = id;
 	}
-
 	public String getID() {
 		return id;
 	}
+	public float getScore() {
+		return score;
+	}
 
+	public void setScore(float score) {
+		this.score = score;
+	}
 	public void setThema(String cat) {
 		this.themas = classifyThema(cat);
 	}
@@ -94,8 +107,52 @@ public class Attraction_ {
 	public String getOverview() {
 		return overview;
 	}
+	public float getThemas1() {
+		return themas1;
+	}
+	public void setThemas1(float themas1) {
+		this.themas1 = themas1;
+	}
+	public float getThemas2() {
+		return themas2;
+	}
+	public void setThemas2(float themas2) {
+		this.themas2 = themas2;
+	}
+	public float getThemas3() {
+		return themas3;
+	}
+	public void setThemas3(float themas3) {
+		this.themas3 = themas3;
+	}
+	public float getThemas4() {
+		return themas4;
+	}
+	public void setThemas4(float themas4) {
+		this.themas4 = themas4;
+	}
+	public float getThemas5() {
+		return themas5;
+	}
+	public void setThemas5(float themas5) {
+		this.themas5 = themas5;
+	}
+	public float getThemas6() {
+		return themas6;
+	}
+	public void setThemas6(float themas6) {
+		this.themas6 = themas6;
+	}
+	public float getThemas7() {
+		return themas7;
+	}
+	public void setThemas7(float themas7) {
+		this.themas7 = themas7;
+	}
 
-	// ÀÚ¿¬ 0, ¿ª»ç 1, ÈŞÇâ 2, ¹®È­½Ã¼³ 3, Ã¼Çè 4, ·¹Àú 5, ¼îÇÎ 6
+	
+	
+	// ìì—° 0, ì—­ì‚¬ 1, íœ´í–¥ 2, ë¬¸í™”ì‹œì„¤ 3, ì²´í—˜ 4, ë ˆì € 5, ì‡¼í•‘ 6
 	float[] classifyThema(String contenttypeid) {
 
 		String cat1, cat2;
@@ -129,4 +186,7 @@ public class Attraction_ {
 		temp = addr1.split(" ");
 		return temp[0] + " " + temp[1];
 	}
+	
+
+
 }
