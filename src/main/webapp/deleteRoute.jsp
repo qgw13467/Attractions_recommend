@@ -1,36 +1,34 @@
-
-
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
+<%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="route.Route" %>
 <%@ page import="route.RouteDAO" %>
+<%@ page import="org.json.simple.JSONObject"%>
+<%@ page import="org.json.simple.JSONArray"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <%
 	int routeID=Integer.parseInt(request.getParameter("routeID"));
-
-
 	RouteDAO routeDAO=new RouteDAO();
 	int result=routeDAO.delete(routeID);
 %>
 
 
 
+<%
+   response.setContentType("application/json");
+   response.setHeader("Content-Disposition", "inline");
+%>
 
-<?xml version="1.0" encoding="UTF-8"?>
-<response>
+
 <%
 	if(result==-1){
 		%>
-		<success>false</success>
+		{"success":"false"}
 		<%
 	}
 	else{
 		%>
-		<success>true</success>
+		{"success":"true"}
 		<%
 	}
 %>
-</response>
-
-
