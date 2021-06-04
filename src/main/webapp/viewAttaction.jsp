@@ -1,6 +1,6 @@
 
 
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
+<%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="attraction.Attraction" %>
 <%@ page import="attraction.AttractionDAO" %>
@@ -18,21 +18,28 @@
 
 
 
-<response>
-<%
-for(int i=0;i<list.size();i++){
-	%>
-	<boards>
-		<attractionName ><%=list.get(i).getAttractionName()%></attractionName>
-		<attractionID ><%=list.get(i).getAttractionID()%></attractionID>
-		<addr1> <%=list.get(i).getAddr1()%>  </addr1>
-		<Thema><%=list.get(i).getThema()%></Thema>
-		<mapX><%=list.get(i).getMapX()%></mapX>
-		<mapY><%=list.get(i).getMapY()%></mapY>
-		<attractionScore><%=list.get(i).getAttractionScore()%></attractionScore>
-	</boards>
-	
-	<%
+{
+	"attractions":
+		[
+			<%
+				for(int i=0;i<list.size();i++){
+			%>
+				{
+				"attractionName":"<%=list.get(i).getAttractionName()%>",
+				"attractionID":"<%=list.get(i).getAttractionID()%>",
+				"addr1":"<%=list.get(i).getAddr1()%>",
+				"Thema":"<%=list.get(i).getThema()%>",
+				"mapX":"<%=list.get(i).getMapX()%>",
+				"mapY":"<%=list.get(i).getMapY()%>",
+				"attractionScore":"<%=list.get(i).getAttractionScore()%>"
+				}
+			<%		if(i!=list.size()-1){%>
+					,<%
+					}
+				}
+			%>
+		
+		
+		
+		]
 }
-%>
-</response>
