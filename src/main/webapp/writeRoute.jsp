@@ -1,9 +1,11 @@
 
 
-<%@ page language="java" contentType="text/xml; charset=UTF-8"
+<%@ page language="java" contentType="application/json; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="route.Route" %>
 <%@ page import="route.RouteDAO" %>
+<%@ page import="org.json.simple.JSONObject"%>
+<%@ page import="org.json.simple.JSONArray"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <%
@@ -18,22 +20,26 @@
 	int result=routeDAO.writeRoute( userID, routeTitle, routeList, Thema, arriveTime);
 %>
 
-<?xml version="1.0" encoding="UTF-8"?>
 
-<response>
+<%
+   response.setContentType("application/json");
+   response.setHeader("Content-Disposition", "inline");
+%>
+
+
 
 <%
 	if(result==-1){
 		%>
-		<success>false</success>
+		{"success":"false"}
 		<%
 	}
 	else{
 		%>
-		<success>true</success>
+		{"success":"true"}
 		<%
 	}
 %>
-</response>
+
 
 
