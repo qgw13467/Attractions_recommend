@@ -209,3 +209,165 @@ userID - 사용자 ID
 	.
 	.
 </response>
+
+=============================================================
+참가신청
+url: domain/joinRequest.jsp
+parameter:
+boardID - 신청할 동행자 게시글의 id
+userID - 신정자의 id
+
+xml:
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>true</success> <!-- 신청 실패시false -->
+<msg>...</msg>  <!-- 실패시 이유 -->
+<kakaoLink>체팅방링크</kakaoLink> <!-- 링크가 없거나 신청 실패시 none -->
+</response>
+
+예시1):
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>true</success>
+<msg>신청 성공</msg>  
+<kakaoLink>https://open.kakao.com/o/aaaaaa</kakaoLink> 
+</response>
+
+예시2):
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>false</success>
+<msg>남는 자리가 없어서 신청을 실패했습니다.</msg>  
+<kakaoLink>none</kakaoLink> 
+</response>
+===========================================
+참가신청자 알림 // 호스트가 작성한 게시글에 동행신청한 게스트 정보를 받아옴
+url: domain/notifyApplicant.jsp
+parameter:
+userID - host의 id  
+xml:
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<number>신청자 수</number>
+<items>
+<item><!-- 신청자 정보. number 수만큼 있음 -->
+	<boardID>어느 게시글에 신청했는지</boardID>
+	<boardTitle>신청한 게시글 제목</boardTitle>
+	<userID>신청자 ID</userID>
+	<nickName>신청자 닉네임</nickName>
+</item> 
+<item>
+...
+</item>
+...
+</items>
+</response>
+
+예시1)
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<number>2</number>
+<items>
+<item>
+	<boardID>11</boardID>
+	<boardTitle>해운대 놀러갈 사람 구해요</boardTitle>
+	<userID>asdf</userID>
+	<nickName>바다사나이</nickName>
+</item> 
+<item>
+	<boardID>11</boardID>
+	<boardTitle>해운대 놀러갈 사람 구해요</boardTitle>
+	<userID>qwer</userID>
+	<nickName>육지사나이</nickName>
+</item>
+</items>
+</response>
+
+예시2)
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<number>0</number>
+<items>
+</items>
+</response>
+==============================================
+url: domain/acceptGuest.jsp
+parameter:
+boardID - 동행자 게시글의 id
+userID - 수락할 게스트의 id
+accept - 수락 또는 거절( 수락: true, 거절: false)
+xml:
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>true</success> <!-- 수락 실패시false -->
+<msg>...</msg>  <!-- 실패시 이유 -->
+</response>
+
+예시1)
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>true</success> 
+<msg>수락 성공</msg>
+</response>
+
+예시2)
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>false</success> 
+<msg>동행자 수가 최대치를 초과해서 실패했습니다.</msg>
+</response>
+==============================================
+회원가입
+url: domain/signUp.jsp
+parameter:
+userID - 아이디
+nickName - 닉네임
+gender - 남: 0, 여자: 1, 미선택: none
+pwd - 비밀 번호
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>false</success> 
+<msg>ID 중복</msg>
+</response>
+==============================================
+로그인
+url: domain/signIn.jsp
+parameter:
+userID - 로그인할 유저의 아이디
+pwd - 비밀번호
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<response>
+<success>true</success> 
+<msg>로그인 성공</msg>
+<nickName>닉네임</nickName> <!-- 로그인실패시 none -->
+<gender>성별</gender> <!-- 남: 0, 여자: 1, 미선택or로그인실패: none -->
+</response>
+==============================================
+모든 광관지 정보
+viewAttaction.jsp
+관광지 정보
+
+==============================================
+url: domain/getAttraction.jsp
+parameter:
+attractionID-  여행지 ID
+{
+	"attractionID":"<%=attraction.getID()%>",
+	"attractionScore":"<%=attraction.getScore()%>",
+	"title":"<%=attraction.getTitle()%>",
+	"addr":"<%=attraction.getAddr()%>",
+	"mapX":"<%=attraction.getX()%>",
+	"mapY":"<%=attraction.getY()%>",
+	"firstimg":"<%=attraction.getFirstImg()%>",
+	"firstimg2":"<%=attraction.getFirstImg2()%>",
+	"overview":"<%=attraction.getOverview()%>",
+	"Thema1":"<%=attraction.getThema1()%>",
+	"Thema2":"<%=attraction.getThema2()%>",
+	"Thema3":"<%=attraction.getThema3()%>",
+	"Thema4":"<%=attraction.getThema4()%>",
+	"Thema5":"<%=attraction.getThema5()%>",
+	"Thema6":"<%=attraction.getThema6()%>",
+	"Thema7":"<%=attraction.getThema7()%>"
+	}
