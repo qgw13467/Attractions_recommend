@@ -180,11 +180,7 @@ public class Attraction_{
 		return themas;
 	}
 
-	String splitName(String addr1) {
-		String[] temp;
-		temp = addr1.split(" ");
-		return temp[0] + " " + temp[1];
-	}
+
 
 	
 
