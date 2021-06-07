@@ -186,5 +186,29 @@ public class RouteDAO {
 		return -1; 
 	}
 	
+	//추천을 위해 현제 루트에 포함된 여행지id 배열을 반환
+	public ArrayList<Integer> attractionList(int routeID) {
+		String SQL = "SELECT routeList FROM route WHERE routeID = ?";
+		ArrayList<Integer> attractionlist = null;
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1,  routeID);
+			rs= pstmt.executeQuery();
+			if(rs.next()) {
+				String temp;
+				temp=rs.getString(1);
+				String attractionID[]=temp.split(",");
+				
+				for(int i=0;i<attractionID.length;i++) {
+					attractionlist.add(Integer.parseInt(attractionID[i]));
+				}
+				
+				
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return attractionlist; 
+	}
 	
 }
