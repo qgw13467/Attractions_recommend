@@ -2,8 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="board.Board" %>
 <%@ page import="board.BoardDAO" %>
-<%@ page import="org.json.simple.JSONObject"%>
-<%@ page import="org.json.simple.JSONArray"%>
+
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <%
