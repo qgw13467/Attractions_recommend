@@ -123,8 +123,8 @@ public class BoardDAO {
 				board.setMaxP(rs.getInt(5));
 				board.setCurrentP(rs.getInt(6));
 				board.setAppliT(rs.getString(7));
-				board.setBoardContent(rs.getString(8));
-				board.setBoardTitle(rs.getString(9));
+				board.setBoardTitle(rs.getString(8));
+				board.setBoardContent(rs.getString(9));
 				board.setStateInt(rs.getInt(10));
 				board.setKakaoLink(rs.getString(11));
 				return board;
