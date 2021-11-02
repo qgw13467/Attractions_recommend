@@ -26,7 +26,9 @@ try {
 	Class.forName("com.mysql.jdbc.Driver");
 	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 	
-	String sql = "SELECT stateInt FROM permission WHERE boardID = ? AND userID = ?";
+	String sql = "SELECT permission.stateInt, board.maxP, board.currentP "
+			+ "FROM permission JOIN board ON permission.boardID = board.boardID "
+			+ "WHERE permission.boardID = ? AND permission.userID = ?";
 
 	pstmt_select = conn.prepareStatement(sql);
 	
@@ -39,18 +41,26 @@ try {
 		int state = rs_select.getInt(1);
 		
 		if(state == 0){ // 0 : 신청후 수락전.
-			sql = "UPDATE permission SET stateInt = ? WHERE boardID = ? AND userID = ?";
-			pstmt_update = conn.prepareStatement(sql);
-			pstmt_update.setInt(1,accept);
-			pstmt_update.setString(2,boardID);
-			pstmt_update.setString(3,userID);
-			pstmt_update.executeUpdate();
-			success = "true";
-			if(state == 1){
-				msg ="수락완료";
+			if(rs_select.getInt(2) <= rs_select.getInt(3) && accept == 1)
+			{
+				msg="설정한 최대인원 수를 초과하여 수락실패했습니다.";
+				success = "false";
 			}
-			else{
-				msg ="거절완료";
+			else
+			{
+				sql = "UPDATE permission SET stateInt = ? WHERE boardID = ? AND userID = ?";
+				pstmt_update = conn.prepareStatement(sql);
+				pstmt_update.setInt(1,accept);
+				pstmt_update.setString(2,boardID);
+				pstmt_update.setString(3,userID);
+				pstmt_update.executeUpdate();
+				success = "true";
+				if(accept == 1){
+					msg ="수락완료";
+				}
+				else{
+					msg ="거절완료";
+				}
 			}
 		}
 		else {

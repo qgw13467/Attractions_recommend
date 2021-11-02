@@ -41,6 +41,7 @@ try {
 	}
 	
 	success = "true";
+	msg = "신청 성공";
 
 	
 }catch (SQLException e){
