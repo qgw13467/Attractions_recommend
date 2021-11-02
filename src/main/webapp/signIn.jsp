@@ -12,6 +12,7 @@ String msg ="";
 String success ="";
 String nickName ="none";
 String gender = "none";
+String age = "none";
 
 if( userID == null || userID.toUpperCase().equals("NULL") || pwd == null || pwd.toUpperCase().equals("NULL")){
 	success ="false";
@@ -24,7 +25,7 @@ else try {
 	Class.forName("com.mysql.jdbc.Driver");
 	conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 	
-	String sql = "SELECT nickName, gender FROM user WHERE userID = ? AND pwd = ?";
+	String sql = "SELECT nickName, gender, age FROM user WHERE userID = ? AND pwd = ?";
 
 	pstmt_select = conn.prepareStatement(sql);
 	pstmt_select.setString(1,userID);
@@ -35,6 +36,8 @@ else try {
 	if(rs_select.next()){
 		nickName = rs_select.getString(1);
 		gender = rs_select.getString(2);
+		age = rs_select.getString(3);
+		
 		if(gender == null)
 		{
 			gender = "none";
@@ -62,4 +65,4 @@ catch (Exception e) {
 	if(conn != null) try{ conn.close();} catch(Exception e){}
 }
 %>
-{"success":<%=success %>,"msg":"<%=msg%>","nickName":"<%=nickName %>","gender":"<%=gender %>"}
+{"success":<%=success %>,"msg":"<%=msg%>","nickName":"<%=nickName %>","gender":"<%=gender %>","age":"<%=age%>"}

@@ -5,6 +5,7 @@ String userID = request.getParameter("userID");
 String nickName = request.getParameter("nickName");
 String gender = request.getParameter("gender");
 String pwd = request.getParameter("pwd");
+String age = request.getParameter("age");
 
 if(!"0".equals(gender) && !"1".equals(gender))
 {
@@ -44,12 +45,13 @@ else try {
 		msg = "ID 중복";
 	}
 	else {
-		sql = "INSERT INTO user VALUES(?,?,?,?)";
+		sql = "INSERT INTO user(userID,nickName,gender,pwd,age,UserScore) VALUES(?,?,?,?,?,0)"; // TODO:터미널에서 테스트 
 		pstmt_insert = conn.prepareStatement(sql);
 		pstmt_insert.setString(1,userID);
 		pstmt_insert.setString(2,nickName);
 		pstmt_insert.setString(3,gender);
 		pstmt_insert.setString(4,pwd);
+		pstmt_insert.setString(5,age);
 		pstmt_insert.executeLargeUpdate();
 		
 		success = "true";
