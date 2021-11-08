@@ -160,7 +160,7 @@ public class AttractionDAO {
 		
 		//평점 갱신
 		public int updateScore(String attractionID,float score) {
-			String SQL = "UPDATE attraction SET score =? WHERE id = ?";
+			String SQL = "UPDATE attraction SET attractionScore  =? WHERE attractionID = ?";
 			try {
 				PreparedStatement pstmt = conn.prepareStatement(SQL);
 				pstmt.setFloat(1,  score);
