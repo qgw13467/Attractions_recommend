@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="route.Route" %>
 <%@ page import="route.RouteDAO" %>
->
+
 <% request.setCharacterEncoding("UTF-8"); %>
 
 <%
