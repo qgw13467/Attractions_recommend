@@ -17,6 +17,7 @@
 	String arriveTime =request.getParameter("arriveTime");
 	RouteDAO routeDAO=new RouteDAO();
 	int result=routeDAO.writeRoute( userID, routeTitle, routeList, Thema, arriveTime);
+	int routeID=routeDAO.getNextRoute();
 %>
 
 
@@ -35,7 +36,9 @@
 	}
 	else{
 		%>
-		{"success":"true"}
+		{"success":"true",
+		 "routeID":"<%=routeID-1%>"
+		}
 		<%
 	}
 %>
