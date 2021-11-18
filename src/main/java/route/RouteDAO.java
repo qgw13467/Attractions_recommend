@@ -14,7 +14,7 @@ public class RouteDAO {
 	
 	public RouteDAO() {
 		try {
-			String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com";
+			String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com:3306/teamproject";
 			String dbID = "admin";
 			String dbPassword = "123456789";
 			Class.forName("com.mysql.jdbc.Driver");
@@ -186,10 +186,12 @@ public class RouteDAO {
 		return -1; 
 	}
 	
+	
 	//추천을 위해 현제 루트에 포함된 여행지id 배열을 반환
-	public ArrayList<Integer> attractionList(int routeID) {
+	@SuppressWarnings("null")
+	public ArrayList<String> attractionList(int routeID) {
 		String SQL = "SELECT routeList FROM route WHERE routeID = ?";
-		ArrayList<Integer> attractionlist = null;
+		ArrayList<String> attractionlist = new ArrayList<String>();
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1,  routeID);
@@ -197,14 +199,15 @@ public class RouteDAO {
 			if(rs.next()) {
 				String temp;
 				temp=rs.getString(1);
-				String attractionID[]=temp.split(",");
+				String[] attractionID=temp.split(",");
 				
 				for(int i=0;i<attractionID.length;i++) {
-					attractionlist.add(Integer.parseInt(attractionID[i]));
+					attractionlist.add(attractionID[i]);
 				}
 				
 				
 			}
+			return attractionlist; 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
