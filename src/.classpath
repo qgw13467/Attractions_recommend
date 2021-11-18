@@ -7,5 +7,7 @@
 	</classpathentry>
 	<classpathentry kind="src" path="main/java"/>
 	<classpathentry kind="lib" path="main/webapp/WEB-INF/lib/mysql-connector-java-8.0.23.jar"/>
+	<classpathentry kind="lib" path="main/webapp/WEB-INF/lib/json-simple-1.1.1.jar/>
+	<classpathentry kind="lib" path="main/webapp/WEB-INF/lib/aws-java-sdk-personalize-1.12.108.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
