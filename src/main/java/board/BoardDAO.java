@@ -15,7 +15,7 @@ public class BoardDAO {
 	
 	public BoardDAO() {
 		try {
-			String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com";
+			String dbURL = "jdbc:mysql://teamproject.cor0tt1ne1ys.ap-northeast-2.rds.amazonaws.com:3306/teamproject";
 			String dbID = "admin";
 			String dbPassword = "123456789";
 			Class.forName("com.mysql.jdbc.Driver");
@@ -132,9 +132,7 @@ public class BoardDAO {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		return null; 
-		
-		
+		return null; 	
 	}
 	
 	
