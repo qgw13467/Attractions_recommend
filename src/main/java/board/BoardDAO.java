@@ -47,29 +47,7 @@ public class BoardDAO {
 		}
 		return ""; 
 	}
-	
-	
-	
-	
-	
-	//다음 게시물 번호받아오기
-	public int getNextBoard() {
-		String SQL = "SELECT boardID FROM board ORDER BY boardID DESC";
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			
-			rs= pstmt.executeQuery();
-			
-			if(rs.next()) {
-				return rs.getInt(1) + 1;
-			}
-			return 1; 
-						
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return -1; 
-	}
+
 	
 	
 	
@@ -138,19 +116,38 @@ public class BoardDAO {
 	
 	
 	
+	//다음 게시물 번호받아오기
+	public int getNextBoard() {
+		String SQL = "SELECT COUNT(*) FROM board WHERE stateInt <> 1";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(SQL);
+			
+			rs= pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return rs.getInt(1) + 1;
+			}
+			return 1; 
+						
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1; 
+	}
 	
 	
 	
 	//페이징
 	public ArrayList<Board> getList(int pageNumber)
 	{
-		String SQL = "SELECT * FROM board WHERE boardID < ? AND stateInt <>1 ORDER BY boardID DESC LIMIT 10";
+		String SQL = "SELECT * FROM (SELECT * FROM board  WHERE stateInt<>1) b ORDER BY boardID DESC LIMIT ?,?";
 		
 		ArrayList<Board> list = new ArrayList<Board>();
 		
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1,  getNextBoard() - (pageNumber - 1) * 10);
+			pstmt.setInt(1,  (pageNumber - 1) * 10);
+			pstmt.setInt(2,  10);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -163,8 +160,8 @@ public class BoardDAO {
 				board.setMaxP(rs.getInt(5));
 				board.setCurrentP(rs.getInt(6));
 				board.setAppliT(rs.getString(7));
-				board.setBoardContent(rs.getString(8));
-				board.setBoardTitle(rs.getString(9));
+				board.setBoardTitle(rs.getString(8));
+				board.setBoardContent(rs.getString(9));
 				board.setStateInt(rs.getInt(10));
 				board.setKakaoLink(rs.getString(11));
 				list.add(board);
