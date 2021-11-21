@@ -17,7 +17,8 @@
 
 
 
-{
+{	
+	"page":"<%=list.size()%>",
 	"boards":
 		[
 			<%
