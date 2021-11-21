@@ -41,18 +41,22 @@ try {
 		int state = rs_select.getInt(1);
 		
 		if(state == 0){ // 0 : 신청후 수락전.
-			if(rs_select.getInt(2) <= rs_select.getInt(3) && accept == 1)
+			int maxP = rs_select.getInt(2);
+			int currentP = rs_select.getInt(3);
+			if(maxP <= currentP && accept == 1)
 			{
 				msg="설정한 최대인원 수를 초과하여 수락실패했습니다.";
 				success = "false";
 			}
 			else
 			{
-				sql = "UPDATE permission SET stateInt = ? WHERE boardID = ? AND userID = ?";
+				sql = "UPDATE permission AS a, board AS b SET a.stateInt = ?, b.currentP = ? WHERE a.boardID = ? AND a.userID = ? AND b.boardID = ?";
 				pstmt_update = conn.prepareStatement(sql);
 				pstmt_update.setInt(1,accept);
-				pstmt_update.setString(2,boardID);
-				pstmt_update.setString(3,userID);
+				pstmt_update.setInt(2,currentP + 1);
+				pstmt_update.setString(3,boardID);
+				pstmt_update.setString(4,userID);
+				pstmt_update.setString(5,boardID);
 				pstmt_update.executeUpdate();
 				success = "true";
 				if(accept == 1){
