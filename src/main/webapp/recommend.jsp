@@ -54,7 +54,7 @@
 			
 			String e = ite2.next();
 		     if (item.getID().equals(e)) {
-		    	 items.remove(item);
+		    	 ite.remove();
 		     }
 		}    
 	}
@@ -67,7 +67,7 @@
 			
 			String e = ite2.next();
 		     if (item.getID().equals(e)) {
-		    	 list.remove(item);
+		    	 ite.remove();
 		     }
 		}    
 	}
@@ -80,7 +80,7 @@
 			
 			Attraction_ l = ite4.next();
 		     if (item.getID().equals(l.getID())) {
-		    	 list.remove(l);
+		    	 ite4.remove();
 		    	 result.add(item);
 		     }
 		}    
